@@ -1,13 +1,10 @@
-import logo from './logo.svg';
 import './App.scss';
-import MyComponent from './components/MyComponent';
-function App() {
+import { ToastContainer, toast } from 'react-toastify';
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <MyComponent />
-      </header>
+    <div className="app-container">
+      Hello World <button>test</button>
+      <ToastContainer />
     </div>
   );
 }
