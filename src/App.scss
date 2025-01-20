@@ -7,3 +7,98 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@media (min-width: 1400px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1500px !important;
+  }
+}
+
+.app-container {
+  .header-container {
+    padding-top: 20px;
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0) !important;
+      z-index: 10;
+
+      .nav-link {
+        &.active {
+          font-weight: 700;
+          color: cornflowerblue;
+        }
+      }
+
+      .btn-login {
+        height: 40px;
+        border: solid 1px grey;
+        border-radius: 5px;
+        padding: 0 20px;
+        margin: 5px;
+
+        &:hover {
+          background-color: whitesmoke;
+        }
+      }
+
+      .btn-signup {
+        height: 40px;
+        background-color: #303030;
+        color: whitesmoke;
+        border-radius: 5px;
+        padding: 0 20px;
+        margin: 5px;
+
+        &:hover {
+          background-color: black;
+        }
+      }
+    }
+  }
+
+  .homepage-content {
+    position: relative;
+    padding: 0 100px;
+    width: 50%;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .title {
+      font-size: 45px;
+      font-weight: 600;
+    }
+
+    .content {
+      font-size: 25px;
+    }
+
+    .btn-click {
+      button {
+        height: 40px;
+        background-color: #303030;
+        color: white;
+        border-radius: 5px;
+        padding: 0 20px;
+        margin: 5px;
+
+        &:hover {
+          background-color: black;
+        }
+      }
+    }
+  }
+}
+
+video {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
