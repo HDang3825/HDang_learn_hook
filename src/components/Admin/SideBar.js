@@ -13,7 +13,7 @@ import sidebarBg from '../../assets/bg2.jpg';
 import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md';
 import './SideBar.scss'
-
+import { Link } from 'react-router-dom';
 const SideBar = (props) => {
     const { image, collapsed, toggled, handleToggleSidebar } = props;
     return (
@@ -49,6 +49,7 @@ const SideBar = (props) => {
                             icon={<FaTachometerAlt />}
                         >
                             Dashboard
+                            <Link to='/admins' />
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="circle">
@@ -56,7 +57,10 @@ const SideBar = (props) => {
                             icon={<FaGem />}
                             title="Features"
                         >
-                            <MenuItem> Quản lí Users</MenuItem>
+                            <MenuItem>
+                                Quản lí Users
+                                <Link to='/admins/manage-user' />
+                            </MenuItem>
                             <MenuItem> Quản lí bài Quiz</MenuItem>
                             <MenuItem> Quản lí câu hỏi</MenuItem>
                         </SubMenu>
@@ -77,7 +81,7 @@ const SideBar = (props) => {
                             className="sidebar-btn"
                             rel="noopener noreferrer"
                         >
-                            <FaGithub />
+                            <MdDashboard />
                             <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                                 Hải Đăng
                             </span>
