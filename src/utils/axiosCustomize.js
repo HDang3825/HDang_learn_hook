@@ -13,7 +13,6 @@ instance.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    console.log(response)
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response && response.data ? response.data : response;
