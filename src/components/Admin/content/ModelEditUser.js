@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices';
-const ModelCreateUser = (props) => {
-    const { show, setShow, listUser } = props;
+import { putEditUser } from '../../../services/apiServices';
+import _ from 'lodash';
+const ModelEditUser = (props) => {
+    const { show, setShow, dataUser, reset, listUser } = props;
     const handleClose = () => {
         setShow(false);
         setEmail('');
@@ -14,14 +15,29 @@ const ModelCreateUser = (props) => {
         setRole('USER');
         setImage('');
         setPreView('');
+        reset({});
     }
-    // const handleShow = () => setShow(true);
+    const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
     const [role, setRole] = useState('USER');
     const [image, setImage] = useState('');
     const [preView, setPreView] = useState('');
+    useEffect(() => {
+        if (!_.isEmpty(dataUser)) {
+            setId(dataUser.id)
+            setEmail(dataUser.email);
+            setUsername(dataUser.username);
+            setRole(dataUser.role);
+            setImage('');
+            if (dataUser.image) {
+                setPreView(`data:image/jpeg;base64,${dataUser.image}`);
+            } else {
+                setPreView('');
+            }
+        }
+    }, [dataUser])
     const handleUpLoadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setPreView(URL.createObjectURL(event.target.files[0]));
@@ -42,13 +58,9 @@ const ModelCreateUser = (props) => {
             toast.error('Email không hợp lệ!');
             return;
         }
-        if (!pass) {
-            toast.error('Password không hợp lệ!');
-            return;
-        }
-        let data = await postCreateNewUser(email, pass, username, role, image);
+        let data = await putEditUser(id, username, role, image);
         if (data && data.EC === 0) {
-            toast.success('Tạo mới người dùng thành công!');
+            toast.success('Cập nhật người dùng thành công!');
             handleClose();
             await listUser();
         }
@@ -64,7 +76,7 @@ const ModelCreateUser = (props) => {
 
             <Modal show={show} onHide={handleClose} size='xl' backdrop="static" className='model-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm Người Dùng</Modal.Title>
+                    <Modal.Title>Chỉnh Sửa Người Dùng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -73,6 +85,7 @@ const ModelCreateUser = (props) => {
                             <input
                                 type="email"
                                 className="form-control"
+                                disabled
                                 value={email}
                                 onChange={(event) => { setEmail(event.target.value) }}
                             />
@@ -82,6 +95,7 @@ const ModelCreateUser = (props) => {
                             <input
                                 type="password"
                                 className="form-control"
+                                disabled
                                 value={pass}
                                 onChange={(event) => { setPass(event.target.value) }}
                             />
@@ -116,7 +130,7 @@ const ModelCreateUser = (props) => {
                             {preView ?
                                 <img src={preView} />
                                 :
-                                <span>Xem trước hình ảnh</span>
+                                <span>Chưa có hình ảnh</span>
                             }
                         </div>
                     </form>
@@ -126,11 +140,11 @@ const ModelCreateUser = (props) => {
                         Đóng
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitCreateUser() }}>
-                        Xác Nhận
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
-export default ModelCreateUser;
+export default ModelEditUser;
