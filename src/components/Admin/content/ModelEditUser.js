@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { putEditUser } from '../../../services/apiServices';
 import _ from 'lodash';
 const ModelEditUser = (props) => {
-    const { show, setShow, dataUser, reset, listUser } = props;
+    const { show, setShow, dataUser, reset, listUser, page } = props;
     const handleClose = () => {
         setShow(false);
         setEmail('');
@@ -62,7 +62,7 @@ const ModelEditUser = (props) => {
         if (data && data.EC === 0) {
             toast.success('Cập nhật người dùng thành công!');
             handleClose();
-            await listUser();
+            await listUser(page);
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);

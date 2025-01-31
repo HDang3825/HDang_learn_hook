@@ -4,25 +4,29 @@ import ModelEditUser from "./ModelEditUser";
 import './ManageUser.scss'
 import { FcPlus } from 'react-icons/fc';
 import { useEffect, useState } from "react";
-import { getListTableUser } from "../../../services/apiServices";
-import { ToastContainer } from 'react-toastify';
+import { getListTableUser, getListTableUserPaginate } from "../../../services/apiServices";
 import TableUser from "./TableUser";
 import ModelDeleteUser from "./ModelDeleteUser";
+import TableUserPaginate from "./TableUserPaginate";
 const MangeUser = (props) => {
+    const LIMIT_USER = 5;
     const [showModelCreateUser, setShowModelCreateUser] = useState(false);
     const [showModelEditUser, setShowModelEditUser] = useState(false);
     const [showModelViewUser, setShowModelViewUser] = useState(false);
     const [showModelDeleteUser, setShowModelDeleteUser] = useState(false);
     const [tableUser, setTableUser] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
     const [dataUser, setDataUser] = useState({})
-    const listUser = async () => {
-        let res = await getListTableUser();
+    const listUser = async (number) => {
+        let res = await getListTableUserPaginate(number, LIMIT_USER);
         if (res.EC === 0) {
-            setTableUser(res.DT);
+            setTableUser(res.DT.users);
+            setTotalPage(res.DT.totalPages)
         }
     }
     useEffect(() => {
-        listUser();
+        listUser(1);
     }, []);
     const getDataUserTable = (user) => {
         setDataUser(user)
@@ -37,17 +41,29 @@ const MangeUser = (props) => {
                     <button className="btn btn-primary" onClick={() => { setShowModelCreateUser(true) }}> <FcPlus /> Thêm Người Dùng</button>
                 </div>
                 <div className="table-user-container">
-                    <TableUser
+                    {/* <TableUser
                         tableUser={tableUser}
                         setShowEdit={setShowModelEditUser}
                         getData={getDataUserTable}
                         setShowView={setShowModelViewUser}
                         setShowDelete={setShowModelDeleteUser}
+                    /> */}
+                    <TableUserPaginate
+                        tableUserPaginate={tableUser}
+                        setShowEdit={setShowModelEditUser}
+                        getData={getDataUserTable}
+                        setShowView={setShowModelViewUser}
+                        setShowDelete={setShowModelDeleteUser}
+                        setPage={setPage}
+                        page={page}
+                        totalPage={totalPage}
+                        listUser={listUser}
                     />
                 </div>
                 <ModelCreateUser
                     show={showModelCreateUser}
                     setShow={setShowModelCreateUser}
+                    setPage={setPage}
                     listUser={listUser}
                 />
                 <ModelViewUser
@@ -62,15 +78,16 @@ const MangeUser = (props) => {
                     listUser={listUser}
                     dataUser={dataUser}
                     reset={setDataUser}
+                    page={page}
                 />
                 <ModelDeleteUser
                     show={showModelDeleteUser}
                     setShow={setShowModelDeleteUser}
-                    listUser={listUser}
                     dataUser={dataUser}
+                    setPage={setPage}
+                    listUser={listUser}
                 />
             </div>
-            <ToastContainer autoClose='3000' />
         </div>
     )
 }

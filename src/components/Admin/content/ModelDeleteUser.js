@@ -3,16 +3,17 @@ import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { deleteUser } from '../../../services/apiServices';
 const ModelDeleteUser = (props) => {
-    const { show, setShow, dataUser, listUser } = props;
+    const { show, setShow, dataUser, listUser, setPage } = props;
     const handleClose = () => {
-        setShow(false)
+        setShow(false);
+        setPage(1);
     };
     const handleSubmitDelete = async () => {
         let data = await deleteUser(dataUser.id);
         if (data && data.EC === 0) {
             toast.info('Đã xóa người dùng!')
             handleClose();
-            await listUser();
+            await listUser(1);
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);

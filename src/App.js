@@ -1,5 +1,4 @@
 import './App.scss';
-import { ToastContainer, toast } from 'react-toastify';
 import Header from './components/Header/Header';
 import { Outlet } from 'react-router-dom';
 const App = () => {
@@ -16,7 +15,6 @@ const App = () => {
           <Outlet />
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

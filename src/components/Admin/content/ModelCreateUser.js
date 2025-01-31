@@ -5,9 +5,10 @@ import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { postCreateNewUser } from '../../../services/apiServices';
 const ModelCreateUser = (props) => {
-    const { show, setShow, listUser } = props;
+    const { show, setShow, listUser, setPage } = props;
     const handleClose = () => {
         setShow(false);
+        setPage(1);
         setEmail('');
         setPass('');
         setUsername('');
@@ -50,7 +51,7 @@ const ModelCreateUser = (props) => {
         if (data && data.EC === 0) {
             toast.success('Tạo mới người dùng thành công!');
             handleClose();
-            await listUser();
+            await listUser(1);
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);
