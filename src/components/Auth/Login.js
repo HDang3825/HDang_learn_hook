@@ -3,19 +3,43 @@ import './Login.scss'
 import { useNavigate } from 'react-router-dom';
 import { postLogin } from '../../services/apiServices';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { doLogin } from '../../redux/action/userAction';
+import { ImSpinner9 } from "react-icons/im";
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
     const handleSubmitLogin = async () => {
+        let isValidateEmail = validateEmail(email);
+        if (!isValidateEmail) {
+            toast.error('Email không hợp lệ!');
+            return;
+        }
+        if (!pass) {
+            toast.error('Password không hợp lệ!');
+            return;
+        }
+        setIsLoading(true);
         let data = await postLogin(email, pass)
-        console.log(data)
         if (data && data.EC === 0) {
+            dispatch(doLogin(data))
             toast.success('Đăng nhập thành công!');
+            setIsLoading(false);
             navigate('/');
         }
         if (data && data.EC !== 0) {
             toast.error('Sai tài khoản hoặc mật khẩu!');
+            setIsLoading(false);
         }
     }
     return (
@@ -52,10 +76,13 @@ const Login = (props) => {
                 <span className='forgot-pass text-decoration-underline text-muted'> Quên mật khẩu?</span>
                 <div>
                     <button
+                        type='submit'
                         className='btn-submit'
                         onClick={() => { handleSubmitLogin() }}
+                        disabled={isLoading}
                     >
-                        Đăng Nhập
+                        {isLoading === true && <ImSpinner9 className='loader-icons' />}
+                        <span>Đăng Nhập</span>
                     </button>
                 </div>
                 <div className='text-center'>
