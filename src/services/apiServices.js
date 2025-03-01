@@ -31,4 +31,55 @@ const postLogin = (email, password) => {
 const postSignUp = (email, password, username) => {
     return axios.post(`/api/v1/register`, { email, password, username });
 }
-export { postCreateNewUser, getListTableUser, putEditUser, deleteUser, getListTableUserPaginate, postLogin, postSignUp };
+const getQuizzByUser = () => {
+    return axios.get('/api/v1/quiz-by-participant');
+}
+const getDataQuiz = (id) => {
+    return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
+}
+const postSubmitAnswers = (data) => {
+    return axios.post(`/api/v1/quiz-submit`, data);
+}
+const postCreateNewQuiz = (description, name, difficulty, quizImage) => {
+    const data = new FormData();
+    data.append('description', description);
+    data.append('name', name);
+    data.append('difficulty', difficulty);
+    data.append('quizImage', quizImage);
+    return axios.post('/api/v1/quiz', data)
+}
+const getAllQuizForAdmin = () => {
+    return axios.get(`/api/v1/quiz/all`);
+}
+const deleteQuizForAdmin = (id) => {
+    return axios.delete(`/api/v1/quiz/${id}`);
+}
+const putEditQuiz = (id, description, name, difficulty, image) => {
+    const data = new FormData();
+    data.append('id', id);
+    data.append('description', description);
+    data.append('name', name);
+    data.append('difficulty', difficulty)
+    data.append('userImage', image);
+    return axios.put('/api/v1/quiz', data)
+}
+const postCreateNewQuestionForQuiz = (quiz_id, description, questionImage) => {
+    const data = new FormData();
+    data.append('quiz_id', quiz_id);
+    data.append('description', description);
+    data.append('questionImage', questionImage);
+    return axios.post('/api/v1/question', data)
+}
+const postCreateNewAnswerForQuestion = (description, correct_answer, question_id) => {
+    return axios.post('/api/v1/answer', {
+        description, correct_answer, question_id
+    })
+}
+export {
+    postCreateNewUser, getListTableUser, putEditUser,
+    deleteUser, getListTableUserPaginate,
+    postLogin, postSignUp, getQuizzByUser, getDataQuiz,
+    postSubmitAnswers, postCreateNewQuiz, getAllQuizForAdmin,
+    deleteQuizForAdmin, putEditQuiz, postCreateNewQuestionForQuiz,
+    postCreateNewAnswerForQuestion
+};
