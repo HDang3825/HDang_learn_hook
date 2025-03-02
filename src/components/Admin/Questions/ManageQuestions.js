@@ -7,49 +7,48 @@ import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../services/apiServices";
-
+import { toast } from "react-toastify";
 const ManageQuestions = (props) => {
     const [selectedQuiz, setSelectedQuiz] = useState({});
-    const [questions, setQuestions] = useState(
-        [
-            {
-                id: uuidv4(),
-                description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    },
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    }
-                ]
-            },
-            {
-                id: uuidv4(),
-                description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    },
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    }
-                ]
-            }
-        ]
-    );
+    const initQuestion = [
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                }
+            ]
+        }
+    ]
+    const [questions, setQuestions] = useState(initQuestion);
     const [listQuiz, setListQuiz] = useState();
     const fetchQuiz = async () => {
         let res = await getAllQuizForAdmin();
@@ -143,19 +142,64 @@ const ManageQuestions = (props) => {
         }
     }
     const handleClickSave = async () => {
+        //validate bài quiz
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error("Vui lòng chọn bài Quiz!")
+            return
+        }
+        //validate câu hỏi
+        let isValidQ = true; let indexQ1 = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                isValidQ = false;
+                indexQ1 = i;
+                break;
+            }
+        }
+        if (isValidQ === false) {
+            toast.error(`Câu ${indexQ1 + 1} bị trống!`);
+            return;
+        }
+        //validate câu trl
+        let isValidAnswer = true;
+        let indexQ = 0; let indexA = 0; let count = 0;
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    isValidAnswer = false;
+                    indexA = j;
+                    break;
+                }
+                if (questions[i].answers[j].isCorrect) {
+                    count++;
+                }
+            }
+            indexQ = i;
+            if (isValidAnswer === false) break;
 
-        await Promise.all(questions.map(async (question) => {
+        }
+        if (isValidAnswer === false) {
+            toast.error(`Trống câu trả lời ${indexA + 1} của câu hỏi ${indexQ + 1}`)
+            return;
+        }
+        if (count !== 1) {
+            toast.error(`Chọn 1 câu trả lời đúng ở câu số ${indexQ + 1}`)
+            return;
+        }
+        for (const question of questions) {
             const q = await postCreateNewQuestionForQuiz(
                 +selectedQuiz.value,
                 question.description,
                 question.imageFile
             );
-            await Promise.all(question.answers.map(async (answer) => {
+            for (const answer of question.answers) {
                 await postCreateNewAnswerForQuestion(
                     answer.description, answer.isCorrect, q.DT.id
                 )
-            }))
-        }))
+            }
+        }
+        toast.success("Tạo mới câu hỏi thành công!");
+        setQuestions(initQuestion)
     }
     return (
         <div className="question-container">
