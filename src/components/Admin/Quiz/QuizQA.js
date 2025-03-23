@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import Select from "react-select"
-import './ManageQuestions.scss'
+import './QuizQA.scss'
 import { BsPatchPlusFill, BsPatchMinusFill } from "react-icons/bs";
 import { AiOutlineMinusCircle, AiFillPlusSquare } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
-import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../services/apiServices";
+import { getAllQuizForAdmin, getQuizWithQA, postUpsertQA } from "../../../services/apiServices";
 import { toast } from "react-toastify";
-const ManageQuestions = (props) => {
+const QuizQA = (props) => {
     const [selectedQuiz, setSelectedQuiz] = useState({});
     const initQuestion = [
         {
@@ -65,6 +65,46 @@ const ManageQuestions = (props) => {
     useEffect(() => {
         fetchQuiz();
     }, []);
+    function urltoFile(url, filename, mimeType) {
+        if (url.startsWith('data:')) {
+            var arr = url.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[arr.length - 1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            var file = new File([u8arr], filename, { type: mime || mimeType });
+            return Promise.resolve(file);
+        }
+        return fetch(url)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], filename, { type: mimeType }));
+    }
+
+
+    const fetchQuizWithQA = async () => {
+        let res = await getQuizWithQA(selectedQuiz.value);
+        if (res && res.EC === 0) {
+            // chuyển base64 sang file object
+            let newQA = [];
+            for (let i = 0; i < res.DT.qa.length; i++) {
+                let q = res.DT.qa[i];
+                if (q.imageFile) {
+                    q.imageName = `Question-${q.id}.png`;
+                    q.imageFile = await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question-${q.id}.png`, 'image/png')
+                }
+                newQA.push(q);
+            }
+            setQuestions(newQA)
+        }
+    }
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
+    }, [selectedQuiz]);
     const handleClickQuestion = (type, id) => {
         if (type === 'ADD') {
             let questionNew = {
@@ -171,43 +211,45 @@ const ManageQuestions = (props) => {
                     break;
                 }
                 if (questions[i].answers[j].isCorrect) {
-                    count++;
+                    if (count !== 1)
+                        count++;
                 }
             }
             indexQ = i;
             if (isValidAnswer === false) break;
-            if (count !== 1) {
-                toast.error(`Chọn 1 câu trả lời đúng ở câu số ${indexQ + 1}`)
-                return;
-            } else {
-                count = 0;
-            }
+
         }
         if (isValidAnswer === false) {
             toast.error(`Trống câu trả lời ${indexA + 1} của câu hỏi ${indexQ + 1}`)
             return;
         }
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile
-            );
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description, answer.isCorrect, q.DT.id
-                )
+        if (count !== 1) {
+            toast.error(`Chọn 1 câu trả lời đúng ở câu số ${indexQ + 1}`)
+            return;
+        }
+        let questionsClone = _.cloneDeep(questions)
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await toBase64(questionsClone[i].imageFile)
             }
         }
-        toast.success("Tạo mới câu hỏi thành công!");
-        setQuestions(initQuestion)
+        let res = await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: questionsClone
+        });
+        if (res && res.EC === 0) {
+            toast.success("Cập nhật thành công!")
+            fetchQuizWithQA();
+        }
     }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
     return (
         <div className="question-container">
-            <div className="title">
-                Quản lí Câu hỏi
-            </div>
-            <hr />
             <div className="add-new-question">
                 <div className="col-6 form-group">
                     <label className="mb-2">Chọn bài Quiz:</label>
@@ -297,4 +339,4 @@ const ManageQuestions = (props) => {
         </div >
     )
 }
-export default ManageQuestions
+export default QuizQA;

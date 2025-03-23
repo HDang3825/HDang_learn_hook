@@ -5,6 +5,7 @@ import _ from "lodash";
 import './DetailQuiz.scss'
 import Question from "./Question";
 import ModelTotalQuiz from "./ModelTotalQuiz";
+import RightContent from "./Content/RightContent";
 const DetailQuiz = (props) => {
     const param = useParams();
     const location = useLocation();
@@ -127,7 +128,11 @@ const DetailQuiz = (props) => {
                 </div>
             </div>
             <div className="right-content">
-                right
+                <RightContent
+                    dataQuiz={dataQuiz}
+                    handleClickSubmit={handleClickSubmit}
+                    setIndex={setIndex}
+                />
             </div>
             <ModelTotalQuiz
                 show={showModelTotal}

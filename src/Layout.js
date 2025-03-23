@@ -12,6 +12,7 @@ import ListQuizz from './components/User/ListQuizz';
 import DetailQuiz from './components/User/DetailQuiz';
 import ManageQuiz from './components/Admin/Quiz/ManageQuiz';
 import ManageQuestions from './components/Admin/Questions/ManageQuestions';
+import PrivateRoute from './routes/PrivateRoute';
 const NotFound = () => {
     return (
         <div className='container mt-3 alert alert-danger text-center'>
@@ -25,9 +26,17 @@ const Layout = (props) => {
             <Routes>
                 <Route path='/' element={<App />} >
                     <Route index element={<Home />} />
-                    <Route path='users' element={<ListQuizz />} />
+                    <Route path='users' element={
+                        <PrivateRoute>
+                            <ListQuizz />
+                        </PrivateRoute>
+                    } />
                 </Route>
-                <Route path='/admins' element={<Admin />} >
+                <Route path='/admins' element={
+                    <PrivateRoute>
+                        <Admin />
+                    </PrivateRoute>
+                } >
                     <Route index element={<DashBoard />} />
                     <Route path='manage-user' element={<MangeUser />} />
                     <Route path='manage-quiz' element={<ManageQuiz />} />

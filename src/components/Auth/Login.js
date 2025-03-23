@@ -42,6 +42,11 @@ const Login = (props) => {
             setIsLoading(false);
         }
     }
+    const handleKeyDown = (event) => {
+        if (event && event.key === 'Enter') {
+            handleSubmitLogin();
+        }
+    }
     return (
         <div className="login-container">
             <div className="header">
@@ -71,6 +76,7 @@ const Login = (props) => {
                         className="form-control"
                         value={pass}
                         onChange={(event) => { setPass(event.target.value) }}
+                        onKeyDown={(event) => handleKeyDown(event)}
                     />
                 </div>
                 <span className='forgot-pass text-decoration-underline text-muted'> Quên mật khẩu?</span>
