@@ -5,7 +5,9 @@ import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { putEditUser } from '../../../services/apiServices';
 import _ from 'lodash';
+import { useTranslation, Trans } from "react-i18next";
 const ModelEditUser = (props) => {
+    const { t } = useTranslation();
     const { show, setShow, dataUser, reset, listUser, page } = props;
     const handleClose = () => {
         setShow(false);
@@ -55,12 +57,12 @@ const ModelEditUser = (props) => {
     const handleSubmitCreateUser = async () => {
         let isValidateEmail = validateEmail(email);
         if (!isValidateEmail) {
-            toast.error('Email không hợp lệ!');
+            toast.error(t('createuser.title1'));
             return;
         }
         let data = await putEditUser(id, username, role, image);
         if (data && data.EC === 0) {
-            toast.success('Cập nhật người dùng thành công!');
+            toast.success(t('edituser.title1'));
             handleClose();
             await listUser(page);
         }
@@ -76,7 +78,7 @@ const ModelEditUser = (props) => {
 
             <Modal show={show} onHide={handleClose} size='xl' backdrop="static" className='model-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chỉnh Sửa Người Dùng</Modal.Title>
+                    <Modal.Title>{t('edituser.title2')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -91,7 +93,7 @@ const ModelEditUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Password</label>
+                            <label className="form-label">{t('createuser.title5')}</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -101,7 +103,7 @@ const ModelEditUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Tên Người Dùng</label>
+                            <label className="form-label">{t('createuser.title6')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -110,19 +112,19 @@ const ModelEditUser = (props) => {
                             />
                         </div>
                         <div className="col-md-4">
-                            <label className="form-label">Vai Trò</label>
+                            <label className="form-label">{t('createuser.title7')}</label>
                             <select
                                 className="form-select"
                                 value={role}
                                 onChange={(event) => { setRole(event.target.value) }}>
-                                <option value='USER'>Người Dùng</option>
-                                <option value='ADMIN'>Quản Trị</option>
+                                <option value='USER'>{t('createuser.title8')}</option>
+                                <option value='ADMIN'>{t('createuser.title9')}</option>
                             </select>
                         </div>
                         <div className='col-md-12'>
                             <label className="form-label label-upload" htmlFor='labelUpload'>
                                 <FcPlus />
-                                Tải Ảnh Lên
+                                {t('createuser.title10')}
                             </label>
                             <input type='file' id='labelUpload' hidden onChange={(event) => { handleUpLoadImage(event) }} />
                         </div>
@@ -130,17 +132,17 @@ const ModelEditUser = (props) => {
                             {preView ?
                                 <img src={preView} />
                                 :
-                                <span>Chưa có hình ảnh</span>
+                                <span>{t('edituser.title3')}</span>
                             }
                         </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        {t('createuser.title12')}
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitCreateUser() }}>
-                        Lưu
+                        {t('edituser.title4')}
                     </Button>
                 </Modal.Footer>
             </Modal>

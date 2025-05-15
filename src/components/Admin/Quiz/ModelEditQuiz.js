@@ -4,7 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import Select from 'react-select';
 import _ from 'lodash';
+import { useTranslation, Trans } from "react-i18next";
 const ModelEditQuiz = (props) => {
+    const { t } = useTranslation();
     const { show, setShow, dataQuiz, setDataQuiz, editQuiz } = props;
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -12,9 +14,9 @@ const ModelEditQuiz = (props) => {
     const [image, setImage] = useState('');
     const [preView, setPreView] = useState('')
     const options = [
-        { value: 'EASY', label: 'Dễ' },
-        { value: 'MEDIUM', label: 'Trung Bình' },
-        { value: 'HARD', label: 'Khó' },
+        { value: 'EASY', label: t('managequiz.title1') },
+        { value: 'MEDIUM', label: t('managequiz.title2') },
+        { value: 'HARD', label: t('managequiz.title3') },
     ];
     const handleClose = () => {
         setShow(false);
@@ -59,50 +61,50 @@ const ModelEditQuiz = (props) => {
 
             <Modal show={show} onHide={handleClose} size='xl' backdrop="static" className='model-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chỉnh Sửa Bài Quiz</Modal.Title>
+                    <Modal.Title>{t('editquiz.title1')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <fieldset className="border rounded-3 p-3">
-                        <legend className="float-none w-auto px-3">Bài Quiz :</legend>
+                        <legend className="float-none w-auto px-3">{t('editquiz.title2')}</legend>
                         <div className="form-floating mb-3">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Tên"
+                                placeholder={t('managequestion.title11')}
                                 value={name}
                                 onChange={(event) => { setName(event.target.value) }}
                             />
-                            <label>Tên</label>
+                            <label>{t('managequestion.title11')}</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Miêu tả"
+                                placeholder={t('editquiz.title3')}
                                 value={description}
                                 onChange={(event) => { setDescription(event.target.value) }}
                             />
-                            <label >Miêu tả</label>
+                            <label >{t('editquiz.title3')}</label>
                         </div>
                         <div className='mb-3'>
                             <Select
                                 defaultValue={difficulty}
                                 onChange={setDifficulty}
                                 options={options}
-                                placeholder="Độ Khó"
+                                placeholder={t('editquiz.title4')}
                             />
                         </div>
                         <div className="more-actions">
                             <label className="form-label label-upload" htmlFor='labelUpload'>
                                 <FcPlus />
-                                Hình Ảnh
+                                {t('viewuser.title2')}
                             </label>
                             <input type='file' id='labelUpload' hidden onChange={(event) => { handleUpLoadImage(event) }} />
                             <div className='col-md-12 img-preview'>
                                 {preView ?
                                     <img src={preView} />
                                     :
-                                    <span>Chưa có hình ảnh</span>
+                                    <span>{t('edituser.title3')}</span>
                                 }
                             </div>
                         </div>
@@ -110,10 +112,10 @@ const ModelEditQuiz = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        {t('createuser.title12')}
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitEdit() }}>
-                        Lưu
+                        {t('edituser.title4')}
                     </Button>
                 </Modal.Footer>
             </Modal>

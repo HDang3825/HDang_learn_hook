@@ -1,0 +1,184 @@
+{
+    "homepage": {
+        "title1": "Có rất nhiều cách để hỏi...",
+        "title2": "Bạn không muốn tạo một biểu mẫu nhàm chán. Và người dùng của bạn sẽ không trả lời. Thay vào đó, hãy tạo một biểu mẫu kiểu chữ và làm cho mọi người vui vẻ.",
+        "title3": {
+            "login1": "Hãy bắt đầu. Nó miễn phí",
+            "login2": "Làm bài ngay"
+        }
+    },
+    "header": {
+        "title1": "Trang Chủ",
+        "title2": "Người Dùng",
+        "title3": "Quản Trị",
+        "title4": {
+            "login": "Đăng Nhập",
+            "signup": "Đăng ký"
+        },
+        "title5": {
+            "profile": "Thông Tin",
+            "logout": "Đăng Xuất"
+        },
+        "title6": "Cài Đặt"
+    },
+    "users": {
+        "title1": "Bài",
+        "title2": "Làm Ngay",
+        "title4": "Chưa có bài làm..."
+    },
+    "question": {
+        "title1": "Question"
+    },
+    "detailquiz": {
+        "title1": "Bài",
+        "title2": "Trước",
+        "title3": "Kế Tiếp",
+        "title4": "Nộp Bài"
+    },
+    "modeltotalquiz": {
+        "title1": "Kết Quả",
+        "title2": "Tổng số câu:",
+        "title3": "Số câu đúng:",
+        "title4": " Xem đáp án",
+        "title5": " Xác Nhận"
+    },
+    "sidebar": {
+        "title1": "Thống Kê",
+        "title2": "Các Tính Năng",
+        "title3": "Quản lí người dùng",
+        "title4": "Quản lí bài thi",
+        "title5": "Quản lí câu hỏi"
+    },
+    "dashboard": {
+        "title1": "Thống Kê",
+        "title2": "Tổng người dùng",
+        "title3": "Tổng bài thi",
+        "title4": "Tổng câu hỏi",
+        "title5": "Tổng câu trả lời",
+        "title6": "Biểu đồ trực quan"
+    },
+    "manageuser": {
+        "title1": " Quản lí Người dùng",
+        "title2": "Thêm Người Dùng"
+    },
+    "createuser": {
+        "title1": "Email không hợp lệ!",
+        "title2": "Mật Khẩu không hợp lệ!",
+        "title3": "Tạo mới người dùng thành công!",
+        "title4": "Thêm Người Dùng",
+        "title5": "Mật Khẩu",
+        "title6": "Tên Người Dùng",
+        "title7": "Vai Trò",
+        "title8": "Người Dùng",
+        "title9": "Quản Trị",
+        "title10": " Tải Ảnh Lên",
+        "title11": "Xem trước hình ảnh",
+        "title12": " Đóng",
+        "title13": "Xác Nhận"
+    },
+    "deleteuser": {
+        "title": "Đã xóa người dùng!",
+        "title1": "Xác Nhận Xóa ?",
+        "title2": "Xác nhận xóa tài khoản có Email là",
+        "title3": "Hủy",
+        "title4": "Xác Nhận"
+    },
+    "edituser": {
+        "title1": "Cập nhật người dùng thành công!",
+        "title2": "Chỉnh Sửa Người Dùng",
+        "title3": "Chưa có hình ảnh",
+        "title4": " Lưu"
+    },
+    "viewuser": {
+        "title1": "Chi Tiết Người Dùng",
+        "title2": " Hình Ảnh"
+    },
+    "tableuser": {
+        "title1": "STT",
+        "title2": "Tên",
+        "title3": "Vai Trò",
+        "title4": "Tùy Chọn",
+        "title5": "Chi Tiết",
+        "title6": "Sửa",
+        "title7": "Xóa",
+        "title8": "Chưa có người dùng!!!",
+        "title9": "Sau >",
+        "title10": "< Trước"
+    },
+    "managequestion": {
+        "title1": "Vui lòng chọn bài Kiểm tra!",
+        "title2": "Câu",
+        "title3": "bị trống!",
+        "title4": "Chọn 1 câu trả lời đúng ở câu số",
+        "title5": "Trống câu trả lời",
+        "title6": "của câu hỏi",
+        "title7": "Tạo mới câu hỏi thành công!",
+        "title8": "Quản lí Câu hỏi",
+        "title9": "Chọn bài Kiểm tra:",
+        "title10": "Thêm câu hỏi:",
+        "title11": "Tên",
+        "title12": "0 file được tải lên",
+        "title13": "Lưu câu hỏi"
+    },
+    "managequiz": {
+        "title1": "Dễ",
+        "title2": "Trung Bình",
+        "title3": "Khó",
+        "title4": "Vui lòng điền đầy đủ thông tin!",
+        "title5": "Tạo mới bài Kiểm tra thành công!",
+        "title6": "Cập nhật bài Kiểm tra ",
+        "title7": "Phân quyền truy cập",
+        "title8": "Quản lí bài Kiểm tra",
+        "title9": "Thêm bài Kiểm tra:"
+    },
+    "assignquiz": {
+        "title1": "Phân quyền thành công!",
+        "title2": "Chọn bài Kiểm tra:",
+        "title3": "Chọn người dùng:",
+        "title4": "Xác Nhận"
+    },
+    "editquiz": {
+        "title1": "Chỉnh Sửa Bài Kiểm Tra",
+        "title2": "Bài Kiểm tra :",
+        "title3": "Miêu tả",
+        "title4": "Độ khó"
+    },
+    "deletequiz": {
+        "title1": "Xác nhận xóa bài Kiểm tra",
+        "title2": "có ID là"
+    },
+    "editquiz2": {
+        "title1": "Cập Nhật Thành Công"
+    },
+    "tablequiz": {
+        "title1": "Đã xóa bài Kiểm tra!",
+        "title2": " Danh Sách Bài Kiểm tra:",
+        "title3": " Chưa có bài Kiểm tra nào!!!"
+    },
+    "login": {
+        "title1": "Email không hợp lệ!",
+        "title2": "Mật Khẩu không hợp lệ!",
+        "title3": "Đăng nhập thành công!",
+        "title4": "Sai tài khoản hoặc mật khẩu!",
+        "title5": "Bạn chưa có tài khoản?",
+        "title6": "Đăng Kí",
+        "title7": "Xin chào, Bạn là?",
+        "title8": "Mật Khẩu",
+        "title9": "Quên mật khẩu?",
+        "title10": "Đăng Nhập",
+        "title11": "Trở về Trang Chủ"
+    },
+    "signup": {
+        "title1": "Không được để trống Email!",
+        "title2": "Không được để trống Mật khẩu!",
+        "title3": "Đăng kí thành công!",
+        "title4": "Xảy ra lỗi, vui lòng thử lại!",
+        "title5": "Bạn đã có tài khoản?",
+        "title6": "Đăng Nhập",
+        "title7": "Bắt đầu trải nghiệm của bạn?",
+        "title8": "Mật Khẩu",
+        "title9": "Tên tài khoản",
+        "title10": "Tạo tài khoản",
+        "title11": "Trở về Trang Chủ"
+    }
+}

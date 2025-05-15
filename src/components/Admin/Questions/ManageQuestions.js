@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../services/apiServices";
 import { toast } from "react-toastify";
+import { useTranslation, Trans } from "react-i18next";
 const ManageQuestions = (props) => {
+    const { t } = useTranslation();
     const [selectedQuiz, setSelectedQuiz] = useState({});
     const initQuestion = [
         {
@@ -144,7 +146,7 @@ const ManageQuestions = (props) => {
     const handleClickSave = async () => {
         //validate bài quiz
         if (_.isEmpty(selectedQuiz)) {
-            toast.error("Vui lòng chọn bài Quiz!")
+            toast.error(t('managequestion.title1'))
             return
         }
         //validate câu hỏi
@@ -157,7 +159,7 @@ const ManageQuestions = (props) => {
             }
         }
         if (isValidQ === false) {
-            toast.error(`Câu ${indexQ1 + 1} bị trống!`);
+            toast.error(`${t('managequestion.title2')} ${indexQ1 + 1} ${t('managequestion.title3')}`);
             return;
         }
         //validate câu trl
@@ -177,14 +179,14 @@ const ManageQuestions = (props) => {
             indexQ = i;
             if (isValidAnswer === false) break;
             if (count !== 1) {
-                toast.error(`Chọn 1 câu trả lời đúng ở câu số ${indexQ + 1}`)
+                toast.error(`${t('managequestion.title4')} ${indexQ + 1}`)
                 return;
             } else {
                 count = 0;
             }
         }
         if (isValidAnswer === false) {
-            toast.error(`Trống câu trả lời ${indexA + 1} của câu hỏi ${indexQ + 1}`)
+            toast.error(`${t('managequestion.title5')} ${indexA + 1} ${t('managequestion.title6')} ${indexQ + 1}`)
             return;
         }
         for (const question of questions) {
@@ -199,25 +201,25 @@ const ManageQuestions = (props) => {
                 )
             }
         }
-        toast.success("Tạo mới câu hỏi thành công!");
+        toast.success(t('managequestion.title7'));
         setQuestions(initQuestion)
     }
     return (
         <div className="question-container">
             <div className="title">
-                Quản lí Câu hỏi
+                {t('managequestion.title8')}
             </div>
             <hr />
             <div className="add-new-question">
                 <div className="col-6 form-group">
-                    <label className="mb-2">Chọn bài Quiz:</label>
+                    <label className="mb-2">{t('managequestion.title9')}</label>
                     <Select
                         defaultValue={selectedQuiz}
                         onChange={setSelectedQuiz}
                         options={listQuiz}
                     />
                 </div>
-                <div className="mt-3 mb-2">Thêm câu hỏi:</div>
+                <div className="mt-3 mb-2">{t('managequestion.title10')}</div>
                 {questions && questions.length > 0 &&
                     questions.map((item, index) => {
                         return (
@@ -227,11 +229,11 @@ const ManageQuestions = (props) => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Tên"
+                                            placeholder={t('managequestion.title11')}
                                             value={item.description}
                                             onChange={(event) => { handleChangeDescription(item.id, event) }}
                                         />
-                                        <label style={{ zIndex: 0 }}>Câu {index + 1} </label>
+                                        <label style={{ zIndex: 0 }}>{t('managequestion.title2')} {index + 1} </label>
                                     </div>
                                     <div className="group-upload">
                                         <label htmlFor={`${item.id}`}>
@@ -243,7 +245,7 @@ const ManageQuestions = (props) => {
                                             onChange={(event) => { handleChangeUpload(item.id, event) }}
                                             hidden
                                         />
-                                        <span>{item.imageFile && item.imageName ? item.imageName : '0 file được tải lên'}</span>
+                                        <span>{item.imageFile && item.imageName ? item.imageName : t('managequestion.title12')}</span>
                                     </div>
                                     <div className="btn-add">
                                         <span onClick={() => { handleClickQuestion("ADD", "") }}><BsPatchPlusFill className="icon-add" /> </span>
@@ -290,7 +292,7 @@ const ManageQuestions = (props) => {
                 }
                 {questions && questions.length > 0 &&
                     <div>
-                        <button className="btn btn-warning" onClick={() => { handleClickSave() }}>Lưu câu hỏi</button>
+                        <button className="btn btn-warning" onClick={() => { handleClickSave() }}>{t('managequestion.title13')}</button>
                     </div>
                 }
             </div>

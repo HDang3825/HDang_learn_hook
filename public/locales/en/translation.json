@@ -1,0 +1,184 @@
+{
+    "homepage": {
+        "title1": "There's a better way to ask...",
+        "title2": "  You don't want to make a boring form. And your audience won't answer one. Create a typeform instead-and make everyone happy.",
+        "title3": {
+            "login1": "Get's started.It's free",
+            "login2": "Do your quiz now"
+        }
+    },
+    "header": {
+        "title1": "Home",
+        "title2": "Users",
+        "title3": "Admin",
+        "title4": {
+            "login": "Log In",
+            "signup": "Sign Up"
+        },
+        "title5": {
+            "profile": "Profile",
+            "logout": "LogOut"
+        },
+        "title6": "Settings"
+    },
+    "users": {
+        "title1": "Quiz",
+        "title2": "Do Now",
+        "title3": "No quiz yet"
+    },
+    "question": {
+        "title1": "Question"
+    },
+    "detailquiz": {
+        "title1": "Quiz",
+        "title2": "Prev",
+        "title3": "Next",
+        "title4": "Submit"
+    },
+    "modeltotalquiz": {
+        "title1": "Test Results",
+        "title2": "Total number of question:",
+        "title3": "Number of correct sentences:",
+        "title4": "See answer",
+        "title5": "Confirm"
+    },
+    "sidebar": {
+        "title1": "DashBoard",
+        "title2": "Features",
+        "title3": "User Management",
+        "title4": "Quiz Management",
+        "title5": "Question Management"
+    },
+    "dashboard": {
+        "title1": "DashBoard",
+        "title2": "Total user",
+        "title3": "Total quiz",
+        "title4": "Total Question",
+        "title5": "Total Answer",
+        "title6": "Visual Chart"
+    },
+    "manageuser": {
+        "title1": " User Management",
+        "title2": "Add Users"
+    },
+    "createuser": {
+        "title1": "Invalid Email!",
+        "title2": "Invalid Password!",
+        "title3": "User created successfully!",
+        "title4": "Create User",
+        "title5": "Password",
+        "title6": "Username",
+        "title7": "Role",
+        "title8": "User",
+        "title9": "Admin",
+        "title10": "Upload Image",
+        "title11": "Image Preview",
+        "title12": "Close",
+        "title13": "Confirm"
+    },
+    "deleteuser": {
+        "title": "User deleted!",
+        "title1": "Confirm Deletion?",
+        "title2": "Are you sure you want to delete the account with Email:",
+        "title3": "Cancel",
+        "title4": "Confirm"
+    },
+    "edituser": {
+        "title1": "User updated successfully!",
+        "title2": "Edit User",
+        "title3": "No image available",
+        "title4": "Save"
+    },
+    "viewuser": {
+        "title1": "User Details",
+        "title2": "Image"
+    },
+    "tableuser": {
+        "title1": "No.",
+        "title2": "Name",
+        "title3": "Role",
+        "title4": "Actions",
+        "title5": "Details",
+        "title6": "Edit",
+        "title7": "Delete",
+        "title8": "No users found!",
+        "title9": "Next >",
+        "title10": "< Previous"
+    },
+    "managequestion": {
+        "title1": "Please select a test!",
+        "title2": "Question",
+        "title3": "is empty!",
+        "title4": "Select one correct answer for question number",
+        "title5": "Answer is missing",
+        "title6": "for the question",
+        "title7": "Question created successfully!",
+        "title8": "Manage Questions",
+        "title9": "Select Test:",
+        "title10": "Add Question:",
+        "title11": "Name",
+        "title12": "0 files uploaded",
+        "title13": "Save Question"
+    },
+    "managequiz": {
+        "title1": "Easy",
+        "title2": "Medium",
+        "title3": "Hard",
+        "title4": "Please fill in all required information!",
+        "title5": "Quiz created successfully!",
+        "title6": "Update Quiz",
+        "title7": "Access Permissions",
+        "title8": "Manage Quizzes",
+        "title9": "Add New Quiz:"
+    },
+    "assignquiz": {
+        "title1": "Permission assigned successfully!",
+        "title2": "Select Quiz:",
+        "title3": "Select User:",
+        "title4": "Confirm"
+    },
+    "editquiz": {
+        "title1": "Edit Quiz",
+        "title2": "Quiz :",
+        "title3": "Description",
+        "title4": "Difficulty"
+    },
+    "deletequiz": {
+        "title1": "Confirm deletion of quiz",
+        "title2": "with ID"
+    },
+    "editquiz2": {
+        "title1": "Update Successful"
+    },
+    "tablequiz": {
+        "title1": "Quiz deleted!",
+        "title2": "List of Quizzes:",
+        "title3": "No quizzes available!"
+    },
+    "login": {
+        "title1": "Invalid email!",
+        "title2": "Invalid password!",
+        "title3": "Login successful!",
+        "title4": "Incorrect username or password!",
+        "title5": "Don't have an account?",
+        "title6": "Sign Up",
+        "title7": "Hello, who are you?",
+        "title8": "Password",
+        "title9": "Forgot password?",
+        "title10": "Login",
+        "title11": "Back to Home"
+    },
+    "signup": {
+        "title1": "Email cannot be empty!",
+        "title2": "Password cannot be empty!",
+        "title3": "Sign up successful!",
+        "title4": "An error occurred, please try again!",
+        "title5": "Already have an account?",
+        "title6": "Login",
+        "title7": "Ready to start your journey?",
+        "title8": "Password",
+        "title9": "Username",
+        "title10": "Create Account",
+        "title11": "Back to Home"
+    }
+}

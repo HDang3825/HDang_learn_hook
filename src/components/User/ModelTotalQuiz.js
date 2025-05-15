@@ -1,30 +1,34 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
+import { useTranslation, Trans } from "react-i18next";
+import React, { useState } from 'react';
 const ModelTotalQuiz = (props) => {
-    const { show, setShow, data } = props;
+    const { t } = useTranslation();
+    const { show, setShow, data, handleShowAnswer } = props;
     const handleClose = () => {
         setShow(false);
+        handleShowAnswer();
     };
     const handleSubmitDelete = async () => {
-        handleClose()
+        handleClose();
     }
     return (
         <>
-            <Modal show={show} onHide={handleClose} animation={false} backdrop="static">
+            <Modal show={show} onHide={handleClose} backdrop="static">
                 <Modal.Header closeButton>
-                    <Modal.Title>Kết Quả</Modal.Title>
+                    <Modal.Title> {t('modeltotalquiz.title1')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div>Tổng số câu: <b>{data ? data.countTotal : 'Chưa hiển thị'}</b></div>
-                    <div>Số câu đúng: <b>{data ? data.countCorrect : 'Chưa hiển thị'}</b></div>
+                    <div>{t('modeltotalquiz.title2')} <b>{data ? data.countTotal : 'Chưa hiển thị'}</b></div>
+                    <div>{t('modeltotalquiz.title3')} <b>{data ? data.countCorrect : 'Chưa hiển thị'}</b></div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Xem đáp án
+                        {t('modeltotalquiz.title4')}
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitDelete() }}>
-                        Xác Nhận
+                        {t('modeltotalquiz.title5')}
                     </Button>
                 </Modal.Footer>
             </Modal>

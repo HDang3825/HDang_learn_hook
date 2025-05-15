@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { getDataQuiz, postSubmitAnswers } from "../../services/apiServices";
 import _ from "lodash";
 import './DetailQuiz.scss'
 import Question from "./Question";
 import ModelTotalQuiz from "./ModelTotalQuiz";
 import RightContent from "./Content/RightContent";
+import { useTranslation, Trans } from "react-i18next";
+import { Breadcrumb } from "react-bootstrap";
 const DetailQuiz = (props) => {
+    const { t } = useTranslation();
     const param = useParams();
     const location = useLocation();
     const [index, setIndex] = useState(0);
@@ -14,6 +17,8 @@ const DetailQuiz = (props) => {
     const quizId = param.id;
     const [showModelTotal, setShowModelTotal] = useState(false)
     const [dataModelTotal, setDataModelTotal] = useState({})
+    const [isSubmitQuiz, setIsSubmitQuiz] = useState(false);
+    const [isShowAnswer, setIsShowAnswer] = useState(false);
     const getQuiz = async () => {
         let res = await getDataQuiz(quizId)
         if (res && res.EC === 0) {
@@ -31,8 +36,10 @@ const DetailQuiz = (props) => {
                             image = item.image;
                         }
                         item.answers.isSelected = false;
+                        item.answers.isCorrect = false;
                         answers.push(item.answers)
                     })
+                    answers = _.orderBy(answers, ['id'], ['asc']);
                     return { questionId: key, answers, questionDescription, image }
                 })
                 .value()
@@ -91,6 +98,7 @@ const DetailQuiz = (props) => {
             payLoad.answers = answers;
             let res = await postSubmitAnswers(payLoad)
             if (res && res.EC === 0) {
+                setIsSubmitQuiz(true);
                 setDataModelTotal({
                     countCorrect: res.DT.countCorrect,
                     countTotal: res.DT.countTotal,
@@ -99,47 +107,83 @@ const DetailQuiz = (props) => {
                 })
             }
             setShowModelTotal(true)
+            if (res.DT && res.DT.quizData) {
+                let dataQuizClone = _.cloneDeep(dataQuiz);
+                let a = res.DT.quizData;
+                for (let q of a) {
+                    for (let i = 0; i < dataQuizClone.length; i++) {
+                        if (+q.questionId === +dataQuizClone[i].questionId) {
+                            let newAnswers = [];
+                            for (let j = 0; j < dataQuizClone[i].answers.length; j++) {
+                                let s = q.systemAnswers.find(item => +item.id === +dataQuizClone[i].answers[j].id)
+                                if (s) {
+                                    dataQuizClone[i].answers[j].isCorrect = true;
+                                }
+                                newAnswers.push(dataQuizClone[i].answers[j]);
+                            }
+                            dataQuizClone[i].answers = newAnswers;
+                        }
+                    }
+                }
+                setDataQuiz(dataQuizClone);
+            }
         }
     }
+    const handleShowAnswer = () => {
+        if (!isSubmitQuiz) return;
+        setIsShowAnswer(true);
+    }
     return (
-        <div className="detail-quiz-container">
-            <div className="left-content">
-                <div className="title">
-                    Bài {quizId}: {location?.state?.quizTitle}
-                    <hr />
+        <>
+            <Breadcrumb className="header-quiz">
+                <NavLink to='/' className='breadcrumb-item'>Home</NavLink>
+                <NavLink to='/users' className='breadcrumb-item'>
+                    Users
+                </NavLink>
+                <NavLink active className='breadcrumb-item'>Quiz</NavLink>
+            </Breadcrumb>
+            <div className="detail-quiz-container">
+                <div className="left-content">
+                    <div className="title">
+                        {t('detailquiz.title1')} {quizId}: {location?.state?.quizTitle}
+                        <hr />
+                    </div>
+                    <div className="q-content">
+                        <Question
+                            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                            index={index}
+                            handleCheck={handleCheck}
+                            isShowAnswer={isShowAnswer}
+                            isSubmitQuiz={isSubmitQuiz}
+                        />
+                    </div>
+                    <div className="q-footer">
+                        <button onClick={() => { handleClickPrev() }} className="btn btn-secondary">
+                            {t('detailquiz.title2')}
+                        </button>
+                        <button onClick={() => { handleClickNext() }} className="btn btn-primary">
+                            {t('detailquiz.title3')}
+                        </button>
+                        <button disabled={isSubmitQuiz} onClick={() => { handleClickSubmit() }} className="btn btn-warning">
+                            {t('detailquiz.title4')}
+                        </button>
+                    </div>
                 </div>
-                <div className="q-content">
-                    <Question
-                        data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
-                        index={index}
-                        handleCheck={handleCheck}
+                <div className="right-content">
+                    <RightContent
+                        dataQuiz={dataQuiz}
+                        handleClickSubmit={handleClickSubmit}
+                        setIndex={setIndex}
                     />
                 </div>
-                <div className="q-footer">
-                    <button onClick={() => { handleClickPrev() }} className="btn btn-secondary">
-                        Trước
-                    </button>
-                    <button onClick={() => { handleClickNext() }} className="btn btn-primary">
-                        Kế Tiếp
-                    </button>
-                    <button onClick={() => { handleClickSubmit() }} className="btn btn-warning">
-                        Nộp Bài
-                    </button>
-                </div>
-            </div>
-            <div className="right-content">
-                <RightContent
-                    dataQuiz={dataQuiz}
-                    handleClickSubmit={handleClickSubmit}
-                    setIndex={setIndex}
+                <ModelTotalQuiz
+                    show={showModelTotal}
+                    setShow={setShowModelTotal}
+                    data={dataModelTotal}
+                    handleShowAnswer={handleShowAnswer}
                 />
             </div>
-            <ModelTotalQuiz
-                show={showModelTotal}
-                setShow={setShowModelTotal}
-                data={dataModelTotal}
-            />
-        </div>
+        </>
     )
 }
 export default DetailQuiz;

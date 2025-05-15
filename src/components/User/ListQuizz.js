@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { getQuizzByUser } from "../../services/apiServices";
 import './ListQuizz.scss'
 import { useNavigate } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 const ListQuizz = () => {
+    const { t } = useTranslation();
     const [arrQuizz, setArrQuizz] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
@@ -22,9 +24,9 @@ const ListQuizz = () => {
                         <div key={`arrQuizz-${index}`} className="card" style={{ width: "18rem" }}>
                             <img src={`data:image/jpeg;base64,${item.image}`} className="card-img-top" alt="..." />
                             <div className="card-body">
-                                <h5 className="card-title">Bài {index + 1}</h5>
+                                <h5 className="card-title">{t('users.title1')} {index + 1}</h5>
                                 <p className="card-text">{item.description}</p>
-                                <button onClick={() => navigate(`/quiz/${item.id}`, { state: { quizTitle: item.description } })} className="btn btn-primary ">Làm ngay</button>
+                                <button onClick={() => navigate(`/quiz/${item.id}`, { state: { quizTitle: item.description } })} className="btn btn-primary ">{t('users.title2')}</button>
                             </div>
                         </div>
                     )
@@ -32,7 +34,7 @@ const ListQuizz = () => {
             }
             {arrQuizz && arrQuizz.length === 0 &&
                 <div className="text-center w-100 fs-4">
-                    Chưa có bài làm...
+                    {t('users.title3')}
                 </div>
             }
         </div>

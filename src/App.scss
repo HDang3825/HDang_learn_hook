@@ -9,6 +9,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.languages {
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}
+
 @media (min-width: 1400px) {
 
   .container,
@@ -24,6 +30,22 @@ body {
 .app-container {
   .header-container {
     padding-top: 20px;
+
+    .brand-icon {
+      font-size: 25px;
+      color: #00bfff;
+      animation: spin 5s infinite linear;
+    }
+
+    @keyframes spin {
+      from {
+        transform: scale(1) rotate(0deg);
+      }
+
+      to {
+        transform: scale(1) rotate(360deg);
+      }
+    }
 
     .navbar {
       background-color: rgba(0, 0, 0, 0) !important;

@@ -7,15 +7,17 @@ import TableQuiz from './TableQuiz';
 import { Accordion } from 'react-bootstrap';
 import QuizQA from './QuizQA';
 import AssignQuiz from './AssignQuiz';
+import { useTranslation, Trans } from "react-i18next";
 const ManageQuiz = (props) => {
+    const { t } = useTranslation();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [image, setImage] = useState(null);
     const options = [
-        { value: 'EASY', label: 'Dễ' },
-        { value: 'MEDIUM', label: 'Trung Bình' },
-        { value: 'HARD', label: 'Khó' },
+        { value: 'EASY', label: t('managequiz.title1') },
+        { value: 'MEDIUM', label: t('managequiz.title2') },
+        { value: 'HARD', label: t('managequiz.title3') },
     ];
     const handleChangeFile = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
@@ -25,7 +27,7 @@ const ManageQuiz = (props) => {
     }
     const handleClickSubmit = async () => {
         if (!name || !description || !type) {
-            toast.error("Vui lòng điền đầy đủ thông tin!")
+            toast.error(t('managequiz.title4'))
             return;
         }
         let res = await postCreateNewQuiz(description, name, type?.value, image)
@@ -35,7 +37,7 @@ const ManageQuiz = (props) => {
             setType('');
             setDescription('')
             window.location.reload();
-            toast.success("Tạo mới bài Quiz thành công!")
+            toast.success(t('managequiz.title5'))
         } else {
             toast.error(res.EM)
         }
@@ -46,43 +48,43 @@ const ManageQuiz = (props) => {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>
                         <div className="title">
-                            <h4>Quản lí bài Quiz </h4>
+                            <h4>{t('managequiz.title8')} </h4>
                         </div>
                     </Accordion.Header>
                     <Accordion.Body>
                         <div className="add-new">
                             <fieldset className="border rounded-3 p-3">
-                                <legend className="float-none w-auto px-3">Thêm bài Quiz:</legend>
+                                <legend className="float-none w-auto px-3">{t('managequiz.title9')}</legend>
                                 <div className="form-floating mb-3">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Tên"
+                                        placeholder={t('managequestion.title11')}
                                         value={name}
                                         onChange={(event) => { setName(event.target.value) }}
                                     />
-                                    <label>Tên</label>
+                                    <label>{t('managequestion.title11')}</label>
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Miêu tả"
+                                        placeholder={t('editquiz.title3')}
                                         value={description}
                                         onChange={(event) => { setDescription(event.target.value) }}
                                     />
-                                    <label >Miêu tả</label>
+                                    <label >{t('editquiz.title3')}</label>
                                 </div>
                                 <div className='mb-3'>
                                     <Select
                                         defaultValue={type}
                                         onChange={setType}
                                         options={options}
-                                        placeholder="Độ Khó"
+                                        placeholder={t('editquiz.title4')}
                                     />
                                 </div>
                                 <div className="more-actions">
-                                    <label className='mb-1' >Hình Ảnh</label>
+                                    <label className='mb-1' >{t('viewuser.title2')}</label>
                                     <input
                                         type="file"
                                         className="form-control"
@@ -94,7 +96,7 @@ const ManageQuiz = (props) => {
                                         className='btn btn-warning'
                                         onClick={() => { handleClickSubmit() }}
                                     >
-                                        Lưu
+                                        {t('edituser.title4')}
                                     </button>
                                 </div>
                             </fieldset>
@@ -107,7 +109,7 @@ const ManageQuiz = (props) => {
                 <Accordion.Item eventKey="1">
                     <Accordion.Header>
                         <div className="title">
-                            <h4>Cập nhật bài Quiz </h4>
+                            <h4>{t('managequiz.title6')} </h4>
                         </div>
                     </Accordion.Header>
                     <Accordion.Body>
@@ -117,7 +119,7 @@ const ManageQuiz = (props) => {
                 <Accordion.Item eventKey="2">
                     <Accordion.Header>
                         <div className="title">
-                            <h4>Phân quyền truy cập </h4>
+                            <h4>{t('managequiz.title7')} </h4>
                         </div>
                     </Accordion.Header>
                     <Accordion.Body>

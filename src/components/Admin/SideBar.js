@@ -14,7 +14,9 @@ import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md';
 import './SideBar.scss'
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation, Trans } from "react-i18next";
 const SideBar = (props) => {
+    const { t } = useTranslation();
     const { image, collapsed, toggled, handleToggleSidebar } = props;
     const navigate = useNavigate();
     return (
@@ -40,7 +42,7 @@ const SideBar = (props) => {
                         }}
                     >
                         <DiReact size={'3em'} color={'00bfff'} />
-                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Hai Dang</span>
+                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Hải Đăng</span>
                     </div>
                 </SidebarHeader>
 
@@ -49,25 +51,25 @@ const SideBar = (props) => {
                         <MenuItem
                             icon={<FaTachometerAlt />}
                         >
-                            Dashboard
+                            {t('sidebar.title1')}
                             <Link to='/admins' />
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="circle">
                         <SubMenu
                             icon={<FaGem />}
-                            title="Features"
+                            title={t('sidebar.title2')}
                         >
                             <MenuItem>
-                                Quản lí Users
+                                {t('sidebar.title3')}
                                 <Link to='/admins/manage-user' />
                             </MenuItem>
                             <MenuItem>
-                                Quản lí bài Quiz
+                                {t('sidebar.title4')}
                                 <Link to='/admins/manage-quiz' />
                             </MenuItem>
                             <MenuItem>
-                                Quản lí câu hỏi
+                                {t('sidebar.title5')}
                                 <Link to='/admins/manage-questions' />
                             </MenuItem>
                         </SubMenu>

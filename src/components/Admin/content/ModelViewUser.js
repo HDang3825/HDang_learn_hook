@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import _ from 'lodash';
+import { useTranslation, Trans } from "react-i18next";
 const ModelViewUser = (props) => {
+    const { t } = useTranslation();
     const { show, setShow, dataUser, reset } = props;
     const handleClose = () => {
         setShow(false);
@@ -38,7 +40,7 @@ const ModelViewUser = (props) => {
 
             <Modal show={show} onHide={handleClose} size='xl' backdrop="static" className='model-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chi Tiết Người Dùng</Modal.Title>
+                    <Modal.Title>{t('viewuser.title1')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -53,7 +55,7 @@ const ModelViewUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Password</label>
+                            <label className="form-label">{t('createuser.title5')}</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -63,7 +65,7 @@ const ModelViewUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Tên Người Dùng</label>
+                            <label className="form-label">{t('createuser.title6')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -73,33 +75,33 @@ const ModelViewUser = (props) => {
                             />
                         </div>
                         <div className="col-md-4">
-                            <label className="form-label">Vai Trò</label>
+                            <label className="form-label">{t('createuser.title7')}</label>
                             <select
                                 className="form-select"
                                 value={role}
                                 disabled
                                 onChange={(event) => { setRole(event.target.value) }}>
-                                <option value='USER'>Người Dùng</option>
-                                <option value='ADMIN'>Quản Trị</option>
+                                <option value='USER'>{t('createuser.title8')}</option>
+                                <option value='ADMIN'>{t('createuser.title9')}</option>
                             </select>
                         </div>
                         <div className='col-md-12'>
                             <label className="form-label label-upload" htmlFor='labelUpload'>
-                                Hình Ảnh
+                                {t('viewuser.title2')}
                             </label>
                         </div>
                         <div className='col-md-12 img-preview'>
                             {preView ?
                                 <img src={preView} />
                                 :
-                                <span>Chưa có hình ảnh</span>
+                                <span>{t('edituser.title3')}</span>
                             }
                         </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        {t('createuser.title12')}
                     </Button>
                 </Modal.Footer>
             </Modal>

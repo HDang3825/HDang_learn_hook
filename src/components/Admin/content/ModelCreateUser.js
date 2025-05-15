@@ -4,7 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { postCreateNewUser } from '../../../services/apiServices';
+import { useTranslation, Trans } from "react-i18next";
 const ModelCreateUser = (props) => {
+    const { t } = useTranslation();
     const { show, setShow, listUser, setPage } = props;
     const handleClose = () => {
         setShow(false);
@@ -40,16 +42,16 @@ const ModelCreateUser = (props) => {
     const handleSubmitCreateUser = async () => {
         let isValidateEmail = validateEmail(email);
         if (!isValidateEmail) {
-            toast.error('Email không hợp lệ!');
+            toast.error(t('createuser.title1'));
             return;
         }
         if (!pass) {
-            toast.error('Password không hợp lệ!');
+            toast.error(t('createuser.title2'));
             return;
         }
         let data = await postCreateNewUser(email, pass, username, role, image);
         if (data && data.EC === 0) {
-            toast.success('Tạo mới người dùng thành công!');
+            toast.success(t('createuser.title3'));
             handleClose();
             await listUser(1);
         }
@@ -65,7 +67,7 @@ const ModelCreateUser = (props) => {
 
             <Modal show={show} onHide={handleClose} size='xl' backdrop="static" className='model-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm Người Dùng</Modal.Title>
+                    <Modal.Title>{t('createuser.title4')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -79,7 +81,7 @@ const ModelCreateUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Password</label>
+                            <label className="form-label">{t('createuser.title5')}</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -88,7 +90,7 @@ const ModelCreateUser = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Tên Người Dùng</label>
+                            <label className="form-label">{t('createuser.title6')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -97,19 +99,19 @@ const ModelCreateUser = (props) => {
                             />
                         </div>
                         <div className="col-md-4">
-                            <label className="form-label">Vai Trò</label>
+                            <label className="form-label">{t('createuser.title7')}</label>
                             <select
                                 className="form-select"
                                 value={role}
                                 onChange={(event) => { setRole(event.target.value) }}>
-                                <option value='USER'>Người Dùng</option>
-                                <option value='ADMIN'>Quản Trị</option>
+                                <option value='USER'>{t('createuser.title8')}</option>
+                                <option value='ADMIN'>{t('createuser.title9')}</option>
                             </select>
                         </div>
                         <div className='col-md-12'>
                             <label className="form-label label-upload" htmlFor='labelUpload'>
                                 <FcPlus />
-                                Tải Ảnh Lên
+                                {t('createuser.title10')}
                             </label>
                             <input type='file' id='labelUpload' hidden onChange={(event) => { handleUpLoadImage(event) }} />
                         </div>
@@ -117,17 +119,17 @@ const ModelCreateUser = (props) => {
                             {preView ?
                                 <img src={preView} />
                                 :
-                                <span>Xem trước hình ảnh</span>
+                                <span>{t('createuser.title11')}</span>
                             }
                         </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        {t('createuser.title12')}
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitCreateUser() }}>
-                        Xác Nhận
+                        {t('createuser.title13')}
                     </Button>
                 </Modal.Footer>
             </Modal>

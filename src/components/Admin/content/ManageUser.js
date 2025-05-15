@@ -8,7 +8,9 @@ import { getListTableUser, getListTableUserPaginate } from "../../../services/ap
 import TableUser from "./TableUser";
 import ModelDeleteUser from "./ModelDeleteUser";
 import TableUserPaginate from "./TableUserPaginate";
+import { useTranslation, Trans } from "react-i18next";
 const MangeUser = (props) => {
+    const { t } = useTranslation();
     const LIMIT_USER = 5;
     const [showModelCreateUser, setShowModelCreateUser] = useState(false);
     const [showModelEditUser, setShowModelEditUser] = useState(false);
@@ -34,11 +36,11 @@ const MangeUser = (props) => {
     return (
         <div className="manage-user-container">
             <div className="title">
-                Quản lí Người dùng
+                {t('manageuser.title1')}
             </div>
             <div className="user-content">
                 <div className="btn-add-user">
-                    <button className="btn btn-primary" onClick={() => { setShowModelCreateUser(true) }}> <FcPlus /> Thêm Người Dùng</button>
+                    <button className="btn btn-primary" onClick={() => { setShowModelCreateUser(true) }}> <FcPlus />   {t('manageuser.title2')}</button>
                 </div>
                 <div className="table-user-container">
                     {/* <TableUser

@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { getAllQuizForAdmin, getQuizWithQA, postUpsertQA } from "../../../services/apiServices";
 import { toast } from "react-toastify";
+import { useTranslation, Trans } from "react-i18next";
 const QuizQA = (props) => {
+    const { t } = useTranslation();
     const [selectedQuiz, setSelectedQuiz] = useState({});
     const initQuestion = [
         {
@@ -184,7 +186,7 @@ const QuizQA = (props) => {
     const handleClickSave = async () => {
         //validate bài quiz
         if (_.isEmpty(selectedQuiz)) {
-            toast.error("Vui lòng chọn bài Quiz!")
+            toast.error(t('managequestion.title1'))
             return
         }
         //validate câu hỏi
@@ -197,7 +199,7 @@ const QuizQA = (props) => {
             }
         }
         if (isValidQ === false) {
-            toast.error(`Câu ${indexQ1 + 1} bị trống!`);
+            toast.error(`${t('managequestion.title2')} ${indexQ1 + 1} ${t('managequestion.title3')}`);
             return;
         }
         //validate câu trl
@@ -220,11 +222,11 @@ const QuizQA = (props) => {
 
         }
         if (isValidAnswer === false) {
-            toast.error(`Trống câu trả lời ${indexA + 1} của câu hỏi ${indexQ + 1}`)
+            toast.error(`${t('managequestion.title5')} ${indexA + 1} t('managequestion.title6') ${indexQ + 1}`)
             return;
         }
         if (count !== 1) {
-            toast.error(`Chọn 1 câu trả lời đúng ở câu số ${indexQ + 1}`)
+            toast.error(`${t('managequestion.title4')} ${indexQ + 1}`)
             return;
         }
         let questionsClone = _.cloneDeep(questions)
@@ -238,7 +240,7 @@ const QuizQA = (props) => {
             questions: questionsClone
         });
         if (res && res.EC === 0) {
-            toast.success("Cập nhật thành công!")
+            toast.success(t('editquiz2.title1'))
             fetchQuizWithQA();
         }
     }
@@ -252,14 +254,14 @@ const QuizQA = (props) => {
         <div className="question-container">
             <div className="add-new-question">
                 <div className="col-6 form-group">
-                    <label className="mb-2">Chọn bài Quiz:</label>
+                    <label className="mb-2">{t('managequestion.title9')}</label>
                     <Select
                         defaultValue={selectedQuiz}
                         onChange={setSelectedQuiz}
                         options={listQuiz}
                     />
                 </div>
-                <div className="mt-3 mb-2">Thêm câu hỏi:</div>
+                <div className="mt-3 mb-2">{t('managequestion.title10')}</div>
                 {questions && questions.length > 0 &&
                     questions.map((item, index) => {
                         return (
@@ -269,11 +271,11 @@ const QuizQA = (props) => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Tên"
+                                            placeholder={t('managequestion.title11')}
                                             value={item.description}
                                             onChange={(event) => { handleChangeDescription(item.id, event) }}
                                         />
-                                        <label style={{ zIndex: 0 }}>Câu {index + 1} </label>
+                                        <label style={{ zIndex: 0 }}>{t('managequestion.title2')} {index + 1} </label>
                                     </div>
                                     <div className="group-upload">
                                         <label htmlFor={`${item.id}`}>
@@ -285,7 +287,7 @@ const QuizQA = (props) => {
                                             onChange={(event) => { handleChangeUpload(item.id, event) }}
                                             hidden
                                         />
-                                        <span>{item.imageFile && item.imageName ? item.imageName : '0 file được tải lên'}</span>
+                                        <span>{item.imageFile && item.imageName ? item.imageName : t('managequestion.title12')}</span>
                                     </div>
                                     <div className="btn-add">
                                         <span onClick={() => { handleClickQuestion("ADD", "") }}><BsPatchPlusFill className="icon-add" /> </span>
@@ -309,7 +311,7 @@ const QuizQA = (props) => {
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Tên"
+                                                        placeholder={t('managequestion.title11')}
                                                         value={item2.description}
                                                         onChange={(event) => { handleChangAnswer('INPUT', item.id, item2.id, event) }}
                                                     />
@@ -332,7 +334,7 @@ const QuizQA = (props) => {
                 }
                 {questions && questions.length > 0 &&
                     <div>
-                        <button className="btn btn-warning" onClick={() => { handleClickSave() }}>Lưu câu hỏi</button>
+                        <button className="btn btn-warning" onClick={() => { handleClickSave() }}>{t('managequestion.title13')}</button>
                     </div>
                 }
             </div>

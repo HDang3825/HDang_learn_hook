@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation, Trans } from "react-i18next";
 const ModelDeleteQuiz = (props) => {
+    const { t } = useTranslation();
     const { show, setShow, id, deleteQuiz, name } = props;
     const handleClose = () => {
         setShow(false);
@@ -13,18 +15,18 @@ const ModelDeleteQuiz = (props) => {
         <>
             <Modal show={show} onHide={handleClose} animation={false} backdrop="static">
                 <Modal.Header closeButton>
-                    <Modal.Title>Xác Nhận Xóa ?</Modal.Title>
+                    <Modal.Title>{t('deleteuser.title1')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Xác nhận xóa bài Quiz <b>{name}</b> có ID là <></>
+                    {t('deletequiz.title1')} <b>{name}</b> {t('deletequiz.title2')} <></>
                     <b>{id}</b>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Hủy
+                        {t('deleteuser.title3')}
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitDelete() }}>
-                        Xác Nhận
+                        {t('deleteuser.title4')}
                     </Button>
                 </Modal.Footer>
             </Modal>

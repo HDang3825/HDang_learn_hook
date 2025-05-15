@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../services/apiServices';
 import { toast } from 'react-toastify';
 import { doLogOut } from '../../redux/action/userAction';
+import Language from './Language';
+import { useTranslation, Trans } from "react-i18next";
+import { TbBrandReact } from "react-icons/tb";
 const Header = () => {
+    const { t } = useTranslation();
     const account = useSelector(state => state.user.account);
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const dispatch = useDispatch();
@@ -28,35 +32,37 @@ const Header = () => {
             toast.error(res.EM)
         }
     }
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
                 {/* <Navbar.Brand href="#home">Hải Đăng</Navbar.Brand> */}
-                <NavLink to='/' className='navbar-brand'>Hải Đăng</NavLink>
+                <NavLink to='/' className='navbar-brand'><TbBrandReact className='brand-icon' /> Hải Đăng</NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <NavLink to='/' className='nav-link'>Trang Chủ</NavLink>
-                        <NavLink to='/users' className='nav-link'>Người Dùng</NavLink>
-                        <NavLink to='/admins' className='nav-link'>Quản Trị</NavLink>
+                        <NavLink to='/' className='nav-link'> {t('header.title1')}</NavLink>
+                        <NavLink to='/users' className='nav-link'>{t('header.title2')}</NavLink>
+                        <NavLink to='/admins' className='nav-link'>{t('header.title3')}</NavLink>
                     </Nav>
                     <Nav>
                         {isAuthenticated === false ?
                             <>
                                 <button type='button' className='btn-login' onClick={() => { handleClickLogin() }}>
-                                    Đăng Nhập
+                                    {t('header.title4.login')}
                                 </button>
                                 <button type='button' className='btn-signup' onClick={() => { handleClickSignup() }}>
-                                    Đăng Kí
+                                    {t('header.title4.signup')}
                                 </button>
                             </>
                             :
-                            <NavDropdown title="Settings" id="basic-nav-dropdown" align={'end'}>
-                                <NavDropdown.Item>Profile</NavDropdown.Item>
+                            <NavDropdown title={t('header.title6')} id="basic-nav-dropdown" align={'end'}>
+                                <NavDropdown.Item> {t('header.title5.profile')}</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item onClick={() => handleLogOut()} >Log Out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => handleLogOut()} > {t('header.title5.logout')}</NavDropdown.Item>
                             </NavDropdown>
                         }
+                        <Language />
                     </Nav>
                 </Navbar.Collapse>
             </Container>

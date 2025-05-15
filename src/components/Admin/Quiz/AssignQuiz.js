@@ -2,7 +2,9 @@ import Select from 'react-select';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getAllQuizForAdmin, getListTableUser, postAssignQuiz } from "../../../services/apiServices";
+import { useTranslation, Trans } from "react-i18next";
 const AssignQuiz = (props) => {
+    const { t } = useTranslation();
     const [selectedQuiz, setSelectedQuiz] = useState({});
     const [listQuiz, setListQuiz] = useState();
     const [selectedUser, setSelectedUser] = useState({});
@@ -38,7 +40,7 @@ const AssignQuiz = (props) => {
     const handleClickAssign = async () => {
         let res = await postAssignQuiz(selectedQuiz.value, selectedUser.value)
         if (res && res.EC === 0) {
-            toast.success("Phân quyền thành công!")
+            toast.success(t('assignquiz.title1'))
         } else {
             toast.error(res.EM);
         }
@@ -46,7 +48,7 @@ const AssignQuiz = (props) => {
     return (
         <div className="assign-quiz-container row">
             <div className="col-6 form-group">
-                <label className="mb-2">Chọn bài Quiz:</label>
+                <label className="mb-2">{t('assignquiz.title2')}</label>
                 <Select
                     defaultValue={selectedQuiz}
                     onChange={setSelectedQuiz}
@@ -54,7 +56,7 @@ const AssignQuiz = (props) => {
                 />
             </div>
             <div className="col-6 form-group">
-                <label className="mb-2">Chọn người dùng:</label>
+                <label className="mb-2">{t('assignquiz.title3')}</label>
                 <Select
                     defaultValue={selectedUser}
                     onChange={setSelectedUser}
@@ -66,7 +68,7 @@ const AssignQuiz = (props) => {
                     className='btn btn-warning mt-3'
                     onClick={() => handleClickAssign()}
                 >
-                    Xác Nhận
+                    {t('assignquiz.title4')}
                 </button>
             </div>
         </div>

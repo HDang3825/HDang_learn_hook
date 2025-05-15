@@ -3,7 +3,9 @@ import { deleteQuizForAdmin, getAllQuizForAdmin, putEditQuiz } from "../../../se
 import { toast } from "react-toastify";
 import ModelDeleteQuiz from "./ModelDeleteQuiz";
 import ModelEditQuiz from "./ModelEditQuiz";
+import { useTranslation, Trans } from "react-i18next";
 const TableQuiz = (props) => {
+    const { t } = useTranslation();
     const [listQuiz, setListQuiz] = useState([]);
     const [deleteId, setDeleteId] = useState('');
     const [deleteName, setDeleteName] = useState('');
@@ -23,13 +25,13 @@ const TableQuiz = (props) => {
         let res = await deleteQuizForAdmin(id)
         if (res && res.EC === 0) {
             fetchQuiz();
-            toast.info('Đã xóa bài Quiz!')
+            toast.info(t('tablequiz.title1'))
         }
     }
     const editQuiz = async (id, description, name, difficulty, image) => {
         let res = await putEditQuiz(id, description, name, difficulty, image)
         if (res && res.EC === 0) {
-            toast.success('Cập nhật thành công!')
+            toast.success(t('managequestion.title1'))
             fetchQuiz();
         }
         else {
@@ -52,16 +54,16 @@ const TableQuiz = (props) => {
     return (
         <>
             <div className="h4">
-                Danh Sách Bài Quiz:
+                {t('tablequiz.title2')}
             </div>
             <table className="table table-hover table-bordered my-3">
                 <thead>
                     <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Miêu Tả</th>
-                        <th scope="col">Độ Khó</th>
-                        <th scope="col">Tùy Chọn</th>
+                        <th scope="col">{t('tableuser.title1')}</th>
+                        <th scope="col">{t('tableuser.title2')}</th>
+                        <th scope="col">{t('tableuser.title3')}</th>
+                        <th scope="col">{t('editquiz.title4')}</th>
+                        <th scope="col">{t('tableuser.title4')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,13 +75,13 @@ const TableQuiz = (props) => {
                                     <td>{item.name}</td>
                                     <td>{item.description}</td>
                                     <td>
-                                        {item.difficulty === 'EASY' ? 'Dễ'
-                                            : item.difficulty === 'MEDIUM' ? 'Trung Bình'
-                                                : item.difficulty === 'HARD' ? 'Khó'
+                                        {item.difficulty === 'EASY' ? t('managequiz.title1')
+                                            : item.difficulty === 'MEDIUM' ? t('managequiz.title2')
+                                                : item.difficulty === 'HARD' ? t('managequiz.title3')
                                                     : 'Chưa xác định'}</td>
                                     <td>
-                                        <button className="btn btn-warning mx-2" onClick={() => { handleClickEdit(item) }}>Sửa</button>
-                                        <button className="btn btn-danger" onClick={() => { handleClickDelete(item) }} >Xóa</button>
+                                        <button className="btn btn-warning mx-2" onClick={() => { handleClickEdit(item) }}>{t('tableuser.title6')}</button>
+                                        <button className="btn btn-danger" onClick={() => { handleClickDelete(item) }} >{t('tableuser.title7')}</button>
                                     </td>
                                 </tr>
                             )
@@ -87,7 +89,7 @@ const TableQuiz = (props) => {
                     }
                     {listQuiz && listQuiz.length === 0 &&
                         <tr>
-                            <td colSpan={'5'} style={{ padding: '20px 35%' }}>Chưa có bài Quiz nào!!!</td>
+                            <td colSpan={'5'} style={{ padding: '20px 35%' }}>{t('tablequiz.title3')}</td>
                         </tr>
                     }
                 </tbody>
